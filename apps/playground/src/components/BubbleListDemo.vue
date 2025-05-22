@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { MessageItem } from '@/assets/mock'
+import type { BubbleListInstance } from 'vue-element-plus-x/types/BubbleList'
 import { messageArr } from '@/assets/mock'
 
 const bubbleItems = ref<MessageItem[]>(messageArr)
 
-const bubbleListRef = ref()
+const bubbleListRef = ref<BubbleListInstance>()
 const num = ref(0)
 
 function addMessage() {
@@ -24,7 +25,7 @@ function addMessage() {
     isFog: true,
   }
   bubbleItems.value.push(obj as MessageItem)
-  bubbleListRef.value.scrollToBottom()
+  bubbleListRef.value?.scrollToBottom()
 }
 
 function onCompleteFunc(_self: unknown) {
@@ -32,11 +33,11 @@ function onCompleteFunc(_self: unknown) {
 }
 
 function scrollToTop() {
-  bubbleListRef.value.scrollToTop()
+  bubbleListRef.value?.scrollToTop()
 }
 
 function scrollToBubble() {
-  bubbleListRef.value.scrollToBubble(num.value)
+  bubbleListRef.value?.scrollToBubble(num.value)
 }
 
 onMounted(() => {
