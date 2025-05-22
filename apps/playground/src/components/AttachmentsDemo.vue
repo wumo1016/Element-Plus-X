@@ -29,7 +29,6 @@ onMounted(() => {
 })
 
 function handleBeforUpload(file: any) {
-  console.log('befor', file)
   if (file.size > 1024 * 1024 * 2) {
     ElMessage.error('文件大小不能超过 2MB!')
     return false

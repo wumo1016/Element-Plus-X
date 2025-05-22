@@ -367,6 +367,7 @@ export const zoomMermaid = (() => {
     //     removeClick: () => actionDiv.removeEventListener('click', onClick),
     //   })
     // })
+    
 
     // // 返回一个函数，用于注销所有事件（包括 click 和 addEvent）
     // return () => {
