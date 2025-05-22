@@ -36,6 +36,10 @@ function scrollToTop() {
   bubbleListRef.value?.scrollToTop()
 }
 
+function scrollToBottom() {
+  bubbleListRef.value?.scrollToBottom()
+}
+
 function scrollToBubble() {
   bubbleListRef.value?.scrollToBubble(num.value)
 }
@@ -61,6 +65,9 @@ onMounted(() => {
         </el-button>
         <el-button type="primary" plain @click="scrollToTop">
           滚动到顶部
+        </el-button>
+        <el-button type="primary" plain @click="scrollToBottom">
+          滚动到底部
         </el-button>
         <el-input-number v-model="num" :min="0" :max="10" controls-position="right" />
         <el-button type="primary" plain @click="scrollToBubble">
