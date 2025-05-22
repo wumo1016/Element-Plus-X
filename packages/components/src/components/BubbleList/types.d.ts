@@ -28,5 +28,5 @@ export interface BubbleListInstance {
   scrollToTop: (behavior?: ScrollBehavior) => void
   scrollToBottom: (behavior?: ScrollBehavior) => void
   scrollToBubble: (index: number) => void
-  autoScroll: () => void
+  autoScroll: () => ResizeObserver
 }
