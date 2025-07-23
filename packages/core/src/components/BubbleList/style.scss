@@ -1,6 +1,6 @@
 .el-bubble-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 16px;
   min-height: 0;
   max-height: var(--el-bubble-list-max-height);
@@ -130,5 +130,35 @@
   &:hover {
     transform: translateY(0px);
     box-shadow: initial;
+  }
+}
+
+// 加载更多
+.el-bubble-list-load-more {
+  display: flex;
+  width: calc(100% - 20px);
+  padding: 4px 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  gap: 3px;
+  height: 100%;
+  color: #909399;
+  background-color: var(--conversation-list-auto-bg-color, #fff);
+}
+
+// 加载动画
+.el-bubble-list-load-more-is-loading {
+  margin-top: 2px;
+  animation: spinloading 2s linear infinite;
+}
+
+@keyframes spinloading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -7,37 +7,41 @@ import { ElMessage } from 'element-plus';
 
 const props = defineProps<Pick<BubbleListProps, 'list'>>();
 
-const bubbleItems = ref<BubbleListProps<MessageItem>['list']>(
-  props.list as BubbleListProps<MessageItem>['list']
-);
+const bubbleItems = ref<BubbleListProps<MessageItem>['list']>([]);
 
 const bubbleListRef = ref();
 const num = ref(0);
 
-function addMessage() {
+function addMessage(loadMore?: boolean) {
   const i = bubbleItems.value.length;
   const isUser = !!(i % 2);
   const content = isUser
-    ? '这是用户的消息'
-    : '欢迎使用 Element Plus X .'.repeat(5);
+    ? `${i}这是用户的消息`
+    : `${i}欢迎使用 Element Plus X .`.repeat(20);
   const placement = isUser ? 'end' : 'start';
   const typing = isUser ? false : { step: 2, suffix: '...' };
   const obj = {
-    key: i,
+    key: Number(useId()),
     role: isUser ? 'user' : 'ai',
     content,
     placement,
-    typing,
+    typing: loadMore ? false : typing,
     isFog: true,
     avatar: isUser ? avatar1 : avatar2,
     avatarSize: '32px'
   };
-  bubbleItems.value.push(obj as MessageItem);
-  bubbleListRef.value.scrollToBottom();
+
+  if (!loadMore) {
+    bubbleListRef.value.scrollToBottom();
+    bubbleItems.value.push(obj as MessageItem);
+  } else {
+    bubbleItems.value.unshift(obj as MessageItem);
+  }
   ElMessage.success(`条数：${bubbleItems.value.length}`);
 }
 
-function handleOnComplete(_self: unknown) {
+function handleOnComplete(_self: unknown, index: number) {
+  bubbleItems.value[index].typing = false;
   ElMessage.success('列表打字结束');
 }
 
@@ -49,13 +53,23 @@ function scrollToBubble() {
   bubbleListRef.value.scrollToBubble(num.value);
 }
 
+async function loadMore() {
+  console.log(123);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      addMessage(true);
+      resolve(null);
+    }, 1000);
+  });
+}
+
 onMounted(() => {
   setTimeout(() => {
-    bubbleItems.value.map((item: MessageItem) => {
+    bubbleItems.value = props.list.map((item: MessageItem) => {
       item.loading = false;
       return item;
     });
-  }, 3000);
+  }, 1000);
 });
 </script>
 
@@ -91,6 +105,7 @@ onMounted(() => {
         v-bind="{ ...$attrs, ...props }"
         ref="bubbleListRef"
         :list="bubbleItems"
+        :load-more="loadMore"
         @complete="handleOnComplete"
       />
     </div>
