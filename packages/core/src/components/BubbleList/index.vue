@@ -130,30 +130,12 @@ function handleBubbleComplete(index: number, instance: TypewriterInstance) {
   }
 }
 
-const loadMoreLoading = ref(false);
-// 加载更多数据
-function loadMoreData() {
-  if (!props.loadMore) return;
-  loadMoreLoading.value = true;
-  props.loadMore().finally(() => {
-    loadMoreLoading.value = false;
-  });
-}
-
 // 监听用户滚动事件
 function handleScroll() {
   if (scrollContainer.value) {
-    const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value;
+    const { scrollTop } = scrollContainer.value;
     showBackToBottom.value =
       props.showBackButton && -scrollTop > props.backButtonThreshold;
-
-    // 最大滚动距离
-    const maxScrollDis = scrollHeight - clientHeight;
-    // 加载更多触发的距离阈值
-    const loadMoreThreshold = 20;
-    if (-scrollTop > maxScrollDis - loadMoreThreshold) {
-      loadMoreData();
-    }
   }
 }
 
@@ -238,15 +220,6 @@ defineExpose({
         <slot name="loading" :item="item" />
       </template>
     </Bubble>
-    <!-- 加载更多 -->
-    <div v-if="loadMoreLoading" class="el-bubble-list-load-more">
-      <slot name="load-more">
-        <el-icon class="el-bubble-list-load-more-is-loading">
-          <Loading />
-        </el-icon>
-        <span>加载更多...</span>
-      </slot>
-    </div>
   </div>
 </template>
 

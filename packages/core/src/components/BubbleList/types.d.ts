@@ -22,7 +22,6 @@ export interface BubbleListProps<
   btnLoading?: boolean;
   btnColor?: string;
   btnIconSize?: number;
-  loadMore?: () => Promise<void>;
 }
 
 export interface BubbleListEmits {
