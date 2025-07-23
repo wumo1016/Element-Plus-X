@@ -3,7 +3,6 @@ import type { BubbleProps } from '../Bubble/types';
 import type { TypewriterInstance } from '../Typewriter/types.d.ts';
 import type { BubbleListEmits, BubbleListProps } from './types.d.ts';
 import { ArrowDownBold } from '@element-plus/icons-vue';
-import { debounce } from 'radash';
 import useScrollDetector from '../../utils/useScrollDetector.ts';
 import Bubble from '../Bubble/index.vue';
 import loadingBg from './loading.vue';
@@ -142,7 +141,7 @@ function loadMoreData() {
 }
 
 // 监听用户滚动事件
-const handleScroll = debounce({ delay: 50 }, () => {
+function handleScroll() {
   if (scrollContainer.value) {
     const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value;
     showBackToBottom.value =
@@ -156,7 +155,7 @@ const handleScroll = debounce({ delay: 50 }, () => {
       loadMoreData();
     }
   }
-});
+}
 
 defineExpose({
   scrollToTop,
