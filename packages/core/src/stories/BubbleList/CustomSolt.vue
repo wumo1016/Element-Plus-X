@@ -15,7 +15,7 @@ const bubbleItems = ref<BubbleListProps<MessageItem>['list']>(
 const bubbleListRef = ref();
 const num = ref(0);
 
-function addMessage() {
+async function addMessage() {
   const i = bubbleItems.value.length;
   const isUser = !!(i % 2);
   const content = isUser
@@ -33,9 +33,21 @@ function addMessage() {
     avatar: isUser ? avatar1 : avatar2,
     avatarSize: '32px'
   };
-  bubbleItems.value.push(obj as MessageItem);
+
   bubbleListRef.value.scrollToBottom();
+  bubbleItems.value.push(obj as MessageItem);
   ElMessage.success(`条数：${bubbleItems.value.length}`);
+
+  let y = 30;
+  const T = setInterval(() => {
+    console.log(y);
+    if (y < 1) {
+      clearInterval(T);
+    }
+    bubbleItems.value[bubbleItems.value.length - 1].content +=
+      '欢迎使用 Element Plus X .';
+    y--;
+  }, 100);
 }
 
 function handleOnComplete(_self: unknown) {
