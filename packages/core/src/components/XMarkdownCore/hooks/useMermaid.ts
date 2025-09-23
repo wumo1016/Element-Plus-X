@@ -1,8 +1,6 @@
 import type { Ref } from 'vue';
-import { MERMAID_CACHE_KEY_LENGTH } from '@components/XMarkdownCore/shared';
-import useSWRV from 'swrv';
-import { Md5 } from 'ts-md5';
-import { computed } from 'vue';
+import { throttle } from 'lodash-es';
+import { computed, ref, watch } from 'vue';
 
 interface UseMermaidOptions {
   id?: string;
@@ -41,8 +39,6 @@ export function useMermaid(
   options: UseMermaidOptions = {}
 ) {
   const { id = 'mermaid', theme = 'default', config = {} } = options;
-
-  // 默认配置
   const mermaidConfig = computed(() => ({
     suppressErrorRendering: true,
     startOnLoad: false,
@@ -50,36 +46,34 @@ export function useMermaid(
     theme,
     ...config
   }));
-
-  // 生成缓存键
-  const cacheKey = computed(() => {
-    const contentValue = typeof content === 'string' ? content : content.value;
-    if (!contentValue) return null;
-
-    const hash =
-      contentValue.length > MERMAID_CACHE_KEY_LENGTH
-        ? `mermaid-${Md5.hashStr(contentValue)}`
-        : `mermaid-${contentValue}`;
-
-    return hash;
-  });
-
-  // 使用 useSWRV 进行缓存和数据获取
-  return useSWRV(
-    cacheKey,
-    async (): Promise<string> => {
+  const data = ref('');
+  const error = ref<unknown>(null);
+  const throttledRender = throttle(
+    async () => {
       const contentValue =
         typeof content === 'string' ? content : content.value;
-      if (!contentValue?.trim()) return '';
-
+      if (!contentValue?.trim()) {
+        data.value = '';
+        error.value = null;
+        return;
+      }
       try {
+        // 动态加载 mermaid 库
         const mermaidInstance = await loadMermaid();
-        if (!mermaidInstance) return contentValue;
-        const isValid = await mermaidInstance.parse(contentValue);
+        if (!mermaidInstance) {
+          data.value = contentValue;
+          error.value = null;
+          return;
+        }
+        // 语法校验
+        const isValid = await mermaidInstance.parse(contentValue.trim());
         if (!isValid) {
           console.log('Mermaid parse error: Invalid syntax');
-          return '';
+          data.value = '';
+          error.value = new Error('Mermaid parse error: Invalid syntax');
+          return;
         }
+        // 初始化 mermaid 配置
         mermaidInstance.initialize(mermaidConfig.value);
         const renderId = `${id}-${Math.random().toString(36).substr(2, 9)}`;
         const container = getMermaidContainer();
@@ -88,17 +82,29 @@ export function useMermaid(
           contentValue,
           container
         );
-        return svg;
-      } catch (error) {
-        console.log('Mermaid render error:', error);
-        return '';
+        data.value = svg;
+        error.value = null;
+      } catch (err) {
+        console.log('Mermaid render error:', err);
+        data.value = '';
+        error.value = err;
       }
     },
-    {
-      dedupingInterval: 3000,
-      errorRetryCount: 2,
-      revalidateOnFocus: false,
-      revalidateDebounce: 300
-    }
+    300,
+    { trailing: true, leading: true }
   );
+
+  // 监听内容变化，自动触发渲染
+  watch(
+    () => (typeof content === 'string' ? content : content.value),
+    () => {
+      throttledRender();
+    },
+    { immediate: true }
+  );
+
+  return {
+    data,
+    error
+  };
 }

@@ -22,7 +22,6 @@ const mermaidResult = useMermaid(mermaidContent, {
   id: `mermaid-${props.raw?.key || 'default'}`
 });
 
-// 使用独立的 ref 存储 SVG 内容，避免闪烁
 const svg = ref('');
 const isLoading = computed(
   () => !mermaidResult.data.value && !mermaidResult.error.value
@@ -194,9 +193,9 @@ const exposedMethods = computed(() => {
       mode="out-in"
       @after-enter="onContentTransitionEnter"
     >
-      <pre v-if="showSourceCode" key="source" class="mermaid-source-code">
-        {{ props.raw.content }}
-      </pre>
+      <pre v-if="showSourceCode" key="source" class="mermaid-source-code">{{
+        props.raw.content
+      }}</pre>
       <div v-else class="mermaid-content" v-html="svg" />
     </Transition>
   </div>

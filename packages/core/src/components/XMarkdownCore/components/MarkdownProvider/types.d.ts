@@ -19,6 +19,8 @@ export interface MarkdownContext {
   codeXRender?: Record<string, any>;
   // 自定义代码块插槽
   codeXSlot?: Record<string, any>;
+  // 自定义代码块属性
+  codeXProps?: Record<string, any>;
   // 自定义代码高亮主题
   codeHighlightTheme?: builtinTheme;
   // 自定义属性对象
