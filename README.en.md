@@ -138,7 +138,7 @@ app.mount('#app');
 
 1. **Fork the repository** → 2. **Create a Feature branch** → 3. **Submit a Pull Request**
 
-Details can be moved 👉 **[📄 Documentation](https://element-plus-x.com/en/components**
+Details can be moved 👉 **[📄 Documentation](https://element-plus-x.com/en/guide/develop.html)**
 
 We welcome:
 
