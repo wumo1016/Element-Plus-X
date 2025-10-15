@@ -142,13 +142,13 @@ app.mount('#app');
 
 ## 🎯开发计划 (每周更新)
 
-🎀我们会在 issue 、交流群 等多方面收集大家的遇到的问题，和需求场景，制定短期和长期的开发计划，查看详情请移步👉 **[开发计划](https://element-plus-x.com/roadmap.html)**
+🎀我们会在 issue 、交流群 等多方面收集大家的遇到的问题，和需求场景，制定短期和长期的开发计划，查看详情请移步👉 **[开发计划](https://element-plus-x.com/zh/roadmap.html)**
 
 ## 🤝 参与贡献
 
 1. **Fork 仓库** → 2. **创建 Feature 分支** → 3. **提交 Pull Request**
 
-详情可以移步👉 **[开发指南](https://element-plus-x.com/guide/develop.html)**
+详情可以移步👉 **[开发指南](https://element-plus-x.com/zh/guide/develop.html)**
 
 我们欢迎：
 

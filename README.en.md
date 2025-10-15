@@ -113,13 +113,13 @@ app.mount('#app');
 ## 🌟 Implemented Components and Hooks
 
 | Component Name       | Description                                                                    | Documentation Link                                                          |
-| -------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ------------------------------------------ |
+| -------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | 
 | `Typewriter`         | Typewriter animation component                                                 | [📄 Documentation](https://element-plus-x.com/en/components/typewriter/)    |
 | `Bubble`             | Extended bubble message component                                              | [📄 Documentation](https://element-plus-x.com/en/components/bubble/)        |
 | `BubbleList`         | Extended bubble message list component                                         | [📄 Documentation](https://element-plus-x.com/en/components/bubbleList/)    |
 | `Conversations`      | Extended conversation management component                                     | [📄 Documentation](https://element-plus-x.com/en/components/conversations/) |
 | `Welcome`            | Welcome component                                                              | [📄 Documentation](https://element-plus-x.com/en/components/welcome/)       |
-| `Prompts`            | Prompt set component                                                           | [📄 Documentation](https://element-plus-x.com/en/components/prompts/)       | <!-- 修正了原表格中Prompts后的多余空格 --> |
+| `Prompts`            | Prompt set component                                                           | [📄 Documentation](https://element-plus-x.com/en/components/prompts/)       | 
 | `FilesCard`          | File card component                                                            | [📄 Documentation](https://element-plus-x.com/en/components/filesCard/)     |
 | `Attachments`        | File attachment upload component                                               | [📄 Documentation](https://element-plus-x.com/en/components/attachments/)   |
 | `Sender`             | Intelligent input box (with voice interaction and built-in command operations) | [📄 Documentation](https://element-plus-x.com/en/components/sender/)        |
@@ -138,7 +138,7 @@ app.mount('#app');
 
 1. **Fork the repository** → 2. **Create a Feature branch** → 3. **Submit a Pull Request**
 
-Details can be moved 👉 **[📄 Documentation](https://element-plus-x.com/en/components**
+Details can be moved 👉 **[📄 Documentation](https://element-plus-x.com/en/guide/develop.html)**
 
 We welcome:
 
